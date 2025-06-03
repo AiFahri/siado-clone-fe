@@ -6,6 +6,7 @@ import Login from "@/Pages/Auth/Login";
 import AdminDashboard from "@/Pages/Admin/Dashboard";
 import UserList from "@/Pages/Admin/Users/UserList";
 import CreateUser from "@/Pages/Admin/Users/CreateUser";
+import EditUser from "@/Pages/Admin/Users/EditUser";
 import AdminCourseList from "@/Pages/Admin/Courses/CourseList";
 import CreateCourse from "@/Pages/Admin/Courses/CreateCourse";
 import EditCourse from "@/Pages/Admin/Courses/EditCourse";
@@ -13,8 +14,11 @@ import ManageLecturers from "@/Pages/Admin/Courses/ManageLecturers";
 import ManageStudents from "@/Pages/Admin/Courses/ManageStudents";
 import LecturerDashboard from "@/Pages/Lecturer/Dashboard";
 import LecturerCourseList from "@/Pages/Lecturer/Courses/CourseList";
+import CourseAssignments from "@/Pages/Lecturer/Courses/CourseAssignments";
+import CourseDetail from "@/Pages/Lecturer/Courses/CourseDetail";
 import LecturerAssignmentList from "@/Pages/Lecturer/Assignments/AssignmentList";
 import LecturerCreateAssignment from "@/Pages/Lecturer/Assignments/CreateAssignment";
+import LecturerEditAssignment from "@/Pages/Lecturer/Assignments/EditAssignment";
 import LecturerSubmissionList from "@/Pages/Lecturer/Submissions/SubmissionList";
 import LecturerGradeSubmission from "@/Pages/Lecturer/Submissions/GradeSubmission";
 import AllSubmissions from "@/Pages/Lecturer/Submissions/AllSubmissions";
@@ -67,6 +71,14 @@ const AppRoutes = () => {
             element={
               <ProtectedRoute requiredRole="admin">
                 <CreateUser />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users/:userId/edit"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <EditUser />
               </ProtectedRoute>
             }
           />
@@ -128,6 +140,22 @@ const AppRoutes = () => {
             }
           />
           <Route
+            path="/lecturer/courses/:courseId"
+            element={
+              <ProtectedRoute requiredRole="lecturer">
+                <CourseDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/lecturer/courses/:courseId/assignments"
+            element={
+              <ProtectedRoute requiredRole="lecturer">
+                <CourseAssignments />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/lecturer/assignments"
             element={
               <ProtectedRoute requiredRole="lecturer">
@@ -140,6 +168,14 @@ const AppRoutes = () => {
             element={
               <ProtectedRoute requiredRole="lecturer">
                 <LecturerCreateAssignment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/lecturer/assignments/:assignmentId/edit"
+            element={
+              <ProtectedRoute requiredRole="lecturer">
+                <LecturerEditAssignment />
               </ProtectedRoute>
             }
           />
