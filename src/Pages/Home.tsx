@@ -23,8 +23,10 @@ export default function Home() {
             <span className="block text-indigo-200">Siado Clone</span>
           </h1>
           <p className="mt-6 max-w-lg text-xl text-indigo-200 sm:max-w-3xl">
-            Platform komprehensif bagi guru untuk mengelola tugas, memberi
-            nilai, dan berinteraksi dengan siswa.
+            Sistem Administrasi Dosen dan Admin yang Terintegrasi dengan
+            Mahasiswa. Optimalkan pengelolaan materi ajar, tugas, dan penilaian
+            dalam satu platform efisien. Bangun kolaborasi aktif dengan
+            mahasiswa — cepat, tepat, dan mudah.
           </p>
           <div className="mt-10 max-w-sm sm:max-w-none sm:flex">
             <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
@@ -89,7 +91,7 @@ export default function Home() {
                       Pembuatan Tugas
                     </h3>
                     <p className="mt-5 text-base text-gray-500">
-                      Buat tugas mendetail dengan format teks kaya, lampiran,
+                      Buat tugas mendetail dengan lampiran
                       dan tenggat waktu. Organisasikan tugas berdasarkan mata
                       pelajaran dan topik.
                     </p>
