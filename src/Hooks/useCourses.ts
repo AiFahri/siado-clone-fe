@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { adminApi, lecturerApi, handleApiError } from "@/Utils/api";
+import { adminApi, handleApiError } from "@/Utils/api";
 import { getGlobalAdminCourses, getGlobalCourses } from "@/Utils/globalStore";
 import type { Course, User } from "@/types";
 
@@ -70,7 +70,11 @@ export const useCourses = (
     async (courseData: Partial<Course>): Promise<Course | null> => {
       try {
         setError(null);
-        const newCourse = await adminApi.courses.create(courseData);
+        const newCourse = await adminApi.courses.create(courseData as { 
+          name: string; 
+          code: string; 
+          credits?: number 
+        });
 
         await fetchCourses();
 
@@ -266,3 +270,7 @@ export const useCourseDetail = (courseId: number): UseCourseDetailReturn => {
 export const useLecturerCourses = () => {
   return useCourses({ role: "lecturer" });
 };
+
+
+
+
