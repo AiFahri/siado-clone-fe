@@ -1,5 +1,5 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { handleApiError } from '@/Utils/api';
+import { useState, useCallback, useRef, useEffect } from "react";
+import { handleApiError } from "@/Utils/api";
 
 interface UseApiState<T> {
   data: T | null;
@@ -58,7 +58,7 @@ export const useApi = <T = unknown>(
       lastArgsRef.current = args;
       retryCountRef.current = 0;
 
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         isLoading: true,
         error: null,
@@ -67,7 +67,7 @@ export const useApi = <T = unknown>(
 
       try {
         const result = await apiFunction(...args);
-        
+
         if (!mountedRef.current) return null;
 
         setState({
@@ -83,7 +83,7 @@ export const useApi = <T = unknown>(
         if (!mountedRef.current) return null;
 
         const errorMessage = handleApiError(error);
-        
+
         setState({
           data: null,
           isLoading: false,
@@ -100,11 +100,11 @@ export const useApi = <T = unknown>(
 
   const retry = useCallback(async () => {
     if (retryCountRef.current < retryCount) {
-      retryCountRef.current += 1;      
+      retryCountRef.current += 1;
       if (retryDelay > 0) {
-        await new Promise(resolve => setTimeout(resolve, retryDelay));
+        await new Promise((resolve) => setTimeout(resolve, retryDelay));
       }
-      
+
       return execute(...lastArgsRef.current);
     }
     return null;
@@ -160,18 +160,31 @@ export const useMutation = <T = unknown, P = unknown>(
 };
 
 export const useInfiniteQuery = <T = unknown>(
-  apiFunction: (page: number, ...args: unknown[]) => Promise<{ data: T[]; hasMore: boolean }>,
+  apiFunction: (
+    page: number,
+    ...args: unknown[]
+  ) => Promise<{ data: T[]; hasMore: boolean }>,
   options: UseApiOptions = {}
 ) => {
   const [allData, setAllData] = useState<T[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const api = useApi(apiFunction, {
+  const apiFunctionWrapper = useCallback(
+    (...args: unknown[]) => {
+      const pageArg = typeof args[0] === "number" ? args[0] : page;
+      return apiFunction(pageArg, ...args.slice(1));
+    },
+    [apiFunction, page]
+  );
+
+  const api = useApi(apiFunctionWrapper, {
     ...options,
     onSuccess: (result: unknown) => {
       const typedResult = result as { data: T[]; hasMore: boolean };
-      setAllData(prev => page === 1 ? typedResult.data : [...prev, ...typedResult.data]);
+      setAllData((prev) =>
+        page === 1 ? typedResult.data : [...prev, ...typedResult.data]
+      );
       setHasMore(typedResult.hasMore);
       options.onSuccess?.(result);
     },
@@ -179,7 +192,7 @@ export const useInfiniteQuery = <T = unknown>(
 
   const loadMore = useCallback(() => {
     if (!api.isLoading && hasMore) {
-      setPage(prev => prev + 1);
+      setPage((prev) => prev + 1);
       api.execute(page + 1);
     }
   }, [api, hasMore, page]);
@@ -220,13 +233,13 @@ export const usePolling = <T = unknown>(
   options: UseApiOptions = {}
 ) => {
   const api = useApi(apiFunction, options);
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startPolling = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    
+
     intervalRef.current = setInterval(() => {
       api.execute();
     }, interval);
@@ -235,7 +248,7 @@ export const usePolling = <T = unknown>(
   const stopPolling = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
+      intervalRef.current = null;
     }
   }, []);
 
