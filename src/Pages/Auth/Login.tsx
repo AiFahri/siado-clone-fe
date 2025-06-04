@@ -56,11 +56,7 @@ export default function Login() {
 
       <div className="max-w-md w-full space-y-8">
         <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="../src/assets/favicon.ico"
-            alt="Logo"
-          />
+          <img className="mx-auto h-12 w-auto" src="/favicon.ico" alt="Logo" />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Masuk ke Akun Anda
           </h2>
