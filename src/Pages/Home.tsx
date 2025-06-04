@@ -91,9 +91,8 @@ export default function Home() {
                       Pembuatan Tugas
                     </h3>
                     <p className="mt-5 text-base text-gray-500">
-                      Buat tugas mendetail dengan lampiran
-                      dan tenggat waktu. Organisasikan tugas berdasarkan mata
-                      pelajaran dan topik.
+                      Buat tugas mendetail dengan lampiran dan tenggat waktu.
+                      Organisasikan tugas berdasarkan mata pelajaran dan topik.
                     </p>
                   </div>
                 </div>
@@ -277,10 +276,7 @@ export default function Home() {
             Clone untuk meningkatkan pengalaman mengajar mereka.
           </p>
           <Link to={route("teacher.dashboard")}>
-            <Button
-              size="lg"
-              className="mt-8 w-full sm:w-auto bg-white text-indigo-700 hover:bg-indigo-50"
-            >
+            <Button size="lg" className="mt-8 w-full sm:w-auto">
               Mulai Sekarang
             </Button>
           </Link>
